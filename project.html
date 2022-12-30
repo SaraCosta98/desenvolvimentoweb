@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Project</title>
+  </head>
+  <body>
+  <a href="index.html">back</a>
+  </body>
+  <script>
+  
+
+    let url = new URL(window.location);
+    let params = new URLSearchParams(url.search);
+    let slug = params.get("slug");
+
+    async function fetchProjectJSON(slug) {
+      const response = await fetch('https://portfolio.humaginarium.net/wp-json/wp/v2/projects?slug='+slug);
+      const project = await response.json();
+      return project;
+    }
+
+    fetchProjectJSON(slug).then(project => {
+      console.log(project); // fetched movies
+
+    
+      p = document.createElement("p");
+      p.innerHTML = "<h1>"+project[0].title.rendered+"</h1>";
+      document.body.appendChild(p);
+
+      p = document.createElement("p");
+      p.innerHTML = project[0].content.rendered;
+      document.body.appendChild(p);
+
+
+      p = document.createElement("p");
+      p.innerHTML = "Client: "+project[0].acf.client;
+      document.body.appendChild(p);
+
+    });
+
+  </script>
+</html>

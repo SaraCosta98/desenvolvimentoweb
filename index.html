@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+    <title>Sara's Portfolio</title>
+  </head>
+  <body>
+  <h1>Sara's Portfolio</h1>
+  </body>
+  <script>
+  
+    async function fetchProjectsJSON() {
+      const response = await fetch('https://portfolio.humaginarium.net/wp-json/wp/v2/projects');
+      const projects = await response.json();
+      return projects;
+    }
+
+    fetchProjectsJSON().then(projects => {
+      console.log(projects); // fetched movies
+
+      for (let i = 0; i < projects.length; i++) {
+         p = document.createElement("p");
+         p.innerHTML = "<a href=\"project.html?slug="+projects[i].slug+"\">"+projects[i].title.rendered+"</a>";
+         document.body.appendChild(p);
+      }
+    });
+
+  </script>
+</html>
